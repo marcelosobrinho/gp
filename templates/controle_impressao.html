@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Controle de Impressão</title>
+    <!-- Adiciona o Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Formulário para controle de impressão -->
+        <h1 class="my-4 text-center">Controle de Impressão</h1>
+        <form method="POST" action="/controle-impressao">
+            <div class="form-group">
+                <label for="nome_cliente">Nome do Cliente:</label>
+                <select class="form-control" id="nome_cliente" name="nome_cliente" required>
+                    {% for cliente in clientes %}
+                    <option value="{{ cliente }}">{{ cliente }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="paginas_impressas">Páginas Impressas:</label>
+                <input type="number" class="form-control" id="paginas_impressas" name="paginas_impressas" required>
+            </div>
+            <div class="form-group">
+                <label for="valor">Valor:</label>
+                <input type="number" class="form-control" id="valor" name="valor" step="0.01" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+
+    <!-- Adiciona o Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

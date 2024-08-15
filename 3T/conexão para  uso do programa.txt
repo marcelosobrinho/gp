@@ -1,0 +1,1 @@
+mongodb+srv://triat:Triat%21Sure%402024@gp.8m9io.mongodb.net/

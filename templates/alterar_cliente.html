@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Cliente</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>Alterar Cliente</h2>
+        <form action="/cliente/alterar/{{ cliente._id }}" method="POST">
+            <div class="form-group">
+                <label for="nome">Nome do Cliente:</label>
+                <input type="text" class="form-control" id="nome" name="nome" value="{{ cliente.nome_cliente }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            <a href="/cliente/listar" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

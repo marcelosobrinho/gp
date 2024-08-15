@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Almoxarifado</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-3">
+        <a href="/" class="btn btn-secondary mb-3">Voltar para o Índice</a>
+        <a href="/almoxarifado/novo" class="btn btn-success mb-3">Novo Controle de Almoxarifado</a>
+        <h2>Lista de Controle de Almoxarifado</h2>
+        <ul class="list-group">
+            {% for registro in registros %}
+                <li class="list-group-item">
+                    Impressora: {{ impressoras[registro.impressora_id] }} <br>
+                    Data da Resma: {{ registro.data_resma }} <br>
+                    Quantidade de Resma: {{ registro.quantidade_resma }}
+                    <a href="/almoxarifado/alterar/{{ registro._id }}" class="btn btn-primary btn-sm float-right">Alterar</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

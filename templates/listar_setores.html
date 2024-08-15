@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Setores</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-3">
+        <a href="/" class="btn btn-secondary mb-3">Voltar para o Índice</a>
+        <h2>Lista de Setores</h2>
+        <ul class="list-group">
+            {% for setor in setores %}
+                <li class="list-group-item">
+                    {{ setor.nome_setor }}
+                    <a href="/setor/alterar/{{ setor._id }}" class="btn btn-primary btn-sm float-right">Alterar</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

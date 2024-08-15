@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - GP</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .option-group {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Barra de navegação -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Menu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/controle-impressao">Controle de Impressão</a>
+                            <a class="dropdown-item" href="/controle-certificado">Controle de Certificado</a>
+                            <a class="dropdown-item" href="/controle-teste1">Controle Teste1</a>
+                            <a class="dropdown-item" href="/controle-teste2">Controle Teste2</a>
+                            <a class="dropdown-item" href="/controle-teste3">Controle Teste3</a>
+                            <a class="dropdown-item" href="/controle-teste4">Controle Teste4</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="cadastroDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Cadastro
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="cadastroDropdown">
+                            <a class="dropdown-item" href="/cliente/novo">Novo Cliente</a>
+                            <a class="dropdown-item" href="/cliente/alterar">Alterar Cliente</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/impressora/novo">Nova Impressora</a>
+                            <a class="dropdown-item" href="/impressora/alterar">Alterar Impressora</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Relatórios</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Conteúdo da página de cadastro -->
+        <div class="content">
+            <h2>Cadastro</h2>
+            <form>
+                <div class="form-group">
+                    <label for="cadastroTipo">Selecione o tipo de cadastro:</label>
+                    <select id="cadastroTipo" class="form-control" onchange="mostrarOpcoes()">
+                        <option value="">Selecione...</option>
+                        <option value="cliente">Cliente</option>
+                        <option value="impressora">Impressora</option>
+                    </select>
+                </div>
+
+                <div id="clienteOptions" class="option-group">
+                    <h3>Cliente</h3>
+                    <a href="/cliente/novo" class="btn btn-primary">Novo Cliente</a>
+                    <a href="/cliente/alterar" class="btn btn-secondary">Alterar Cliente</a>
+                </div>
+
+                <div id="impressoraOptions" class="option-group">
+                    <h3>Impressora</h3>
+                    <a href="/impressora/novo" class="btn btn-primary">Nova Impressora</a>
+                    <a href="/impressora/alterar" class="btn btn-secondary">Alterar Impressora</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function mostrarOpcoes() {
+            var tipo = document.getElementById('cadastroTipo').value;
+            document.getElementById('clienteOptions').style.display = 'none';
+            document.getElementById('impressoraOptions').style.display = 'none';
+
+            if (tipo === 'cliente') {
+                document.getElementById('clienteOptions').style.display = 'block';
+            } else if (tipo === 'impressora') {
+                document.getElementById('impressoraOptions').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

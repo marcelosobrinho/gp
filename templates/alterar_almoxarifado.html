@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Almoxarifado</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>Alterar Almoxarifado</h2>
+        <form action="/almoxarifado/alterar/{{ almoxarifado._id }}" method="POST">
+            <div class="form-group">
+                <label for="impressora">Impressora:</label>
+                <select class="form-control" id="impressora" name="impressora" required>
+                    {% for impressora in impressoras %}
+                        <option value="{{ impressora._id }}" {% if impressora._id == almoxarifado.impressora_id %}selected{% endif %}>{{ impressora.nome_impressora }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="data_resma">Data da Resma:</label>
+                <input type="date" class="form-control" id="data_resma" name="data_resma" value="{{ almoxarifado.data_resma }}" required>
+            </div>
+            <div class="form-group">
+                <label for="quantidade_resma">Quantidade de Resma:</label>
+                <input type="number" class="form-control" id="quantidade_resma" name="quantidade_resma" value="{{ almoxarifado.quantidade_resma }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            <a href="/almoxarifado/listar" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

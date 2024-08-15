@@ -1,25 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>GP - Gerenciamento de Processos</title>
-    <!-- Adiciona o Bootstrap CSS -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GP - Gerenciador de Processos</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        .dropdown-menu {
+            min-width: 200px;
+        }
+        .dropdown-item i {
+            margin-right: 8px;
+        }
+        .dropdown-header {
+            font-weight: bold;
+            background-color: #f8f9fa;
+            padding: 0.5rem 1rem;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <!-- Barra de título -->
+        <!-- Barra de navegação -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">GP - Gerenciamento de Processos</a>
+            <a class="navbar-brand" href="#">Menu</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Sistema GP</a>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Menu
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menuDropdown">
+                            <a class="dropdown-item" href="/controle_impressao/listar"><i class="fas fa-print"></i> Controle de Impressão</a>
+                            <a class="dropdown-item" href="/controle-certificado"><i class="fas fa-certificate"></i> Controle de Certificado</a>
+                            <a class="dropdown-item" href="/almoxarifado/listar"><i class="fas fa-archive"></i> Controle Almoxarifado</a>
+                            <a class="dropdown-item" href="/controle-teste2"><i class="fas fa-tachometer-alt"></i> Controle Teste2</a>
+                            <a class="dropdown-item" href="/controle-teste3"><i class="fas fa-tachometer-alt"></i> Controle Teste3</a>
+                            <a class="dropdown-item" href="/controle-teste4"><i class="fas fa-tachometer-alt"></i> Controle Teste4</a>
+                        </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Cadastro</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="cadastroDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Cadastro
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="cadastroDropdown">
+                            <div class="dropdown-header">Impressora</div>
+                            <a class="dropdown-item" href="/impressora/novo"><i class="fas fa-plus"></i> Novo</a>
+                            <a class="dropdown-item" href="/impressora/listar"><i class="fas fa-edit"></i> Alterar</a>
+
+                            <div class="dropdown-header">Cliente</div>
+                            <a class="dropdown-item" href="/cliente/novo"><i class="fas fa-plus"></i> Novo</a>
+                            <a class="dropdown-item" href="/cliente/listar"><i class="fas fa-edit"></i> Alterar</a>
+
+                            <div class="dropdown-header">Setor</div>
+                            <a class="dropdown-item" href="/setor/novo"><i class="fas fa-plus"></i> Novo</a>
+                            <a class="dropdown-item" href="/setor/listar"><i class="fas fa-edit"></i> Alterar</a>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Relatórios</a>
@@ -27,32 +67,8 @@
                 </ul>
             </div>
         </nav>
-
-        <!-- Menu com botões em uma matriz de 2x3 -->
-        <h1 class="my-4 text-center">Menu</h1>
-        <div class="row">
-            <div class="col-md-4">
-                <a href="/controle-impressao" class="btn btn-primary btn-block mb-4">Controle de Impressão</a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="btn btn-primary btn-block mb-4">Controle de Certificado</a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="btn btn-primary btn-block mb-4">Controle Teste1</a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="btn btn-primary btn-block mb-4">Controle Teste2</a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="btn btn-primary btn-block mb-4">Controle Teste3</a>
-            </div>
-            <div class="col-md-4">
-                <a href="#" class="btn btn-primary btn-block mb-4">Controle Teste4</a>
-            </div>
-        </div>
     </div>
 
-    <!-- Adiciona o Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

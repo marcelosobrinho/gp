@@ -16,26 +16,23 @@ client = MongoClient(f'mongodb+srv://{username}:{password}@{cluster}/?retryWrite
 db = client[db_name]
 
 # Coleções
-setor_collection = db['setores']  # Nome da coleção de setores
-cliente_collection = db['clientes']  # Nome da coleção de clientes
-impressora_collection = db['impressoras']  # Nome da coleção de impressoras
-controle_impressao_collection = db['controle_impressao']  # Nome da coleção de Controle de Impressora
-controle_almoxarifado_collection = db['controle_almoxarifado']  # Coleção para o controle de almoxarifado
+setor_collection = db['setores']
+cliente_collection = db['clientes']
+impressora_collection = db['impressoras']
+controle_impressao_collection = db['controle_impressao']
+controle_almoxarifado_collection = db['controle_almoxarifado']
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# CRUD de Clientes
 @app.route('/cliente/novo', methods=['GET', 'POST'])
 def novo_cliente():
     if request.method == 'POST':
         nome_cliente = request.form['nome']
-        
-        # Inserir o novo cliente no banco de dados
         cliente_collection.insert_one({"nome_cliente": nome_cliente})
-        
-        return redirect('/')  # Redirecionar para a página inicial após o cadastro
-
+        return redirect('/')
     return render_template('cliente_novo.html')
 
 @app.route('/cliente/listar')
@@ -46,32 +43,19 @@ def listar_clientes():
 @app.route('/cliente/alterar/<cliente_id>', methods=['GET', 'POST'])
 def alterar_cliente(cliente_id):
     cliente = cliente_collection.find_one({"_id": ObjectId(cliente_id)})
-    
     if request.method == 'POST':
         nome_cliente = request.form['nome']
-        
-        # Atualizar o nome do cliente
-        cliente_collection.update_one(
-            {"_id": ObjectId(cliente_id)},
-            {"$set": {"nome_cliente": nome_cliente}}
-        )
-        
+        cliente_collection.update_one({"_id": ObjectId(cliente_id)}, {"$set": {"nome_cliente": nome_cliente}})
         return redirect('/cliente/listar')
-
     return render_template('alterar_cliente.html', cliente=cliente)
 
+# CRUD de Setores
 @app.route('/setor/novo', methods=['GET', 'POST'])
 def setor_novo():
     if request.method == 'POST':
         nome_setor = request.form['nome']
-        
-        # Inserir apenas o nome_setor no banco de dados
-        setor_collection.insert_one({
-            'nome_setor': nome_setor
-        })
-
-        return redirect('/')  # Redirecionar para a página inicial após o cadastro
-
+        setor_collection.insert_one({'nome_setor': nome_setor})
+        return redirect('/')
     return render_template('setor_novo.html')
 
 @app.route('/setor/listar')
@@ -82,20 +66,13 @@ def listar_setores():
 @app.route('/setor/alterar/<setor_id>', methods=['GET', 'POST'])
 def alterar_setor(setor_id):
     setor = setor_collection.find_one({"_id": ObjectId(setor_id)})
-    
     if request.method == 'POST':
         nome_setor = request.form['nome']
-        
-        # Atualizar o nome do setor
-        setor_collection.update_one(
-            {"_id": ObjectId(setor_id)},
-            {"$set": {"nome_setor": nome_setor}}
-        )
-        
+        setor_collection.update_one({"_id": ObjectId(setor_id)}, {"$set": {"nome_setor": nome_setor}})
         return redirect('/setor/listar')
-
     return render_template('alterar_setor.html', setor=setor)
 
+# CRUD de Impressoras
 @app.route('/impressora/novo', methods=['GET', 'POST'])
 def impressora_novo():
     setores = setor_collection.find()
@@ -103,46 +80,32 @@ def impressora_novo():
         nome_impressora = request.form['nome']
         setor_id = request.form['setor']
         tipo_impressora = request.form['tipo']
-
-        impressora_collection.insert_one({
-            'nome': nome_impressora,
-            'setor': ObjectId(setor_id),
-            'tipo': tipo_impressora
-        })
-
+        impressora_collection.insert_one({'nome': nome_impressora, 'setor': ObjectId(setor_id), 'tipo': tipo_impressora})
         return redirect('/impressora/listar')
-
     return render_template('novo_impressora.html', setores=setores)
 
 @app.route('/impressora/listar')
 def listar_impressoras():
     impressoras = impressora_collection.find()
-    setores = {setor['_id']: setor['nome_setor'] for setor in setor_collection.find()}  # Dicionário para mapear setor_id a nome_setor
+    setores = {setor['_id']: setor['nome_setor'] for setor in setor_collection.find()}
     return render_template('listar_impressoras.html', impressoras=impressoras, setores=setores)
 
 @app.route('/impressora/alterar/<impressora_id>', methods=['GET', 'POST'])
 def alterar_impressora(impressora_id):
     setores = setor_collection.find()
     impressora = impressora_collection.find_one({"_id": ObjectId(impressora_id)})
-
     if request.method == 'POST':
         nome_impressora = request.form['nome']
         setor_id = request.form['setor']
         tipo_impressora = request.form['tipo']
-
         impressora_collection.update_one(
             {"_id": ObjectId(impressora_id)},
-            {"$set": {
-                "nome": nome_impressora,
-                "setor": ObjectId(setor_id),
-                "tipo": tipo_impressora
-            }}
+            {"$set": {"nome": nome_impressora, "setor": ObjectId(setor_id), "tipo": tipo_impressora}}
         )
-
         return redirect('/impressora/listar')
-
     return render_template('alterar_impressora.html', impressora=impressora, setores=setores)
 
+# Controle de Impressão
 @app.route('/controle_impressao/novo', methods=['GET', 'POST'])
 def novo_controle_impressao():
     if request.method == 'POST':
@@ -150,17 +113,13 @@ def novo_controle_impressao():
         cliente_id = request.form['cliente']
         data_impressao = request.form['data_impressao']
         quantidade = int(request.form['quantidade'])
-
-        # Inserir o controle de impressão no banco de dados
         controle_impressao_collection.insert_one({
             'impressora_id': ObjectId(impressora_id),
             'cliente_id': ObjectId(cliente_id),
             'data_impressao': data_impressao,
             'quantidade': quantidade
         })
-
         return redirect('/controle_impressao/listar')
-
     impressoras = impressora_collection.find()
     clientes = cliente_collection.find()
     return render_template('controle_impressao_novo.html', impressoras=impressoras, clientes=clientes)
@@ -175,26 +134,16 @@ def listar_controle_impressao():
 @app.route('/controle_impressao/alterar/<registro_id>', methods=['GET', 'POST'])
 def alterar_controle_impressao(registro_id):
     registro = controle_impressao_collection.find_one({"_id": ObjectId(registro_id)})
-    
     if request.method == 'POST':
         impressora_id = request.form['impressora']
         cliente_id = request.form['cliente']
         data_impressao = request.form['data_impressao']
         quantidade = int(request.form['quantidade'])
-        
-        # Atualizar o registro de controle de impressão
         controle_impressao_collection.update_one(
             {"_id": ObjectId(registro_id)},
-            {"$set": {
-                'impressora_id': ObjectId(impressora_id),
-                'cliente_id': ObjectId(cliente_id),
-                'data_impressao': data_impressao,
-                'quantidade': quantidade
-            }}
+            {"$set": {'impressora_id': ObjectId(impressora_id), 'cliente_id': ObjectId(cliente_id), 'data_impressao': data_impressao, 'quantidade': quantidade}}
         )
-        
         return redirect('/controle_impressao/listar')
-
     impressoras = impressora_collection.find()
     clientes = cliente_collection.find()
     return render_template('alterar_controle_impressao.html', registro=registro, impressoras=impressoras, clientes=clientes)
@@ -202,17 +151,13 @@ def alterar_controle_impressao(registro_id):
 @app.route('/controle_impressao/pesquisar', methods=['GET'])
 def pesquisar_controle_impressao():
     termo = request.args.get('termo', '')
-    campo = request.args.get('campo', 'impressora_nome')  # Campo selecionado pelo usuário
-
-    # Inicializar a lista de resultados
+    campo = request.args.get('campo', 'impressora_nome')
     resultado = []
 
     if campo == 'impressora_nome':
         impressoras = impressora_collection.find({"nome": {"$regex": termo, "$options": "i"}})
         impressora_ids = [impressora['_id'] for impressora in impressoras]
-
         registros = controle_impressao_collection.find({"impressora_id": {"$in": impressora_ids}})
-
         for registro in registros:
             impressora = impressora_collection.find_one({"_id": registro['impressora_id']})
             cliente = cliente_collection.find_one({"_id": registro['cliente_id']})
@@ -227,9 +172,7 @@ def pesquisar_controle_impressao():
     elif campo == 'cliente_nome':
         clientes = cliente_collection.find({"nome_cliente": {"$regex": termo, "$options": "i"}})
         cliente_ids = [cliente['_id'] for cliente in clientes]
-
         registros = controle_impressao_collection.find({"cliente_id": {"$in": cliente_ids}})
-
         for registro in registros:
             impressora = impressora_collection.find_one({"_id": registro['impressora_id']})
             cliente = cliente_collection.find_one({"_id": registro['cliente_id']})
@@ -242,8 +185,7 @@ def pesquisar_controle_impressao():
             })
 
     elif campo == 'data_impressao':
-        registros = controle_impressao_collection.find({"data_impressao": {"$regex": termo}})
-
+        registros = controle_impressao_collection.find({"data_impressao": {"$regex": termo, "$options": "i"}})
         for registro in registros:
             impressora = impressora_collection.find_one({"_id": registro['impressora_id']})
             cliente = cliente_collection.find_one({"_id": registro['cliente_id']})
@@ -257,24 +199,30 @@ def pesquisar_controle_impressao():
 
     return jsonify(resultado)
 
+# Controle de Almoxarifado
 @app.route('/almoxarifado/novo', methods=['GET', 'POST'])
 def novo_almoxarifado():
+    impressoras = impressora_collection.find()
     if request.method == 'POST':
         impressora_id = request.form['impressora']
-        data_resma = request.form['data_resma']
-        quantidade_resma = int(request.form['quantidade_resma'])
+        quantidade_resmas = int(request.form['quantidade_resmas'])
+        impressora = impressora_collection.find_one({"_id": ObjectId(impressora_id)})
 
-        # Inserir o controle de almoxarifado no banco de dados
+        # Calculando as páginas restantes
+        paginas_restantes = impressora.get('paginas_restantes', 0) + (quantidade_resmas * 500)
+        
         controle_almoxarifado_collection.insert_one({
             'impressora_id': ObjectId(impressora_id),
-            'data_resma': data_resma,
-            'quantidade_resma': quantidade_resma
+            'quantidade_resmas': quantidade_resmas
         })
 
+        # Atualizando as páginas restantes na coleção de impressoras
+        impressora_collection.update_one(
+            {"_id": ObjectId(impressora_id)},
+            {"$set": {"paginas_restantes": paginas_restantes}}
+        )
         return redirect('/almoxarifado/listar')
-
-    impressoras = impressora_collection.find()
-    return render_template('almoxarifado_novo.html', impressoras=impressoras)
+    return render_template('novo_almoxarifado.html', impressoras=impressoras)
 
 @app.route('/almoxarifado/listar')
 def listar_almoxarifado():
@@ -285,36 +233,31 @@ def listar_almoxarifado():
 @app.route('/almoxarifado/alterar/<registro_id>', methods=['GET', 'POST'])
 def alterar_almoxarifado(registro_id):
     registro = controle_almoxarifado_collection.find_one({"_id": ObjectId(registro_id)})
-    
+    impressoras = impressora_collection.find()
+
     if request.method == 'POST':
         impressora_id = request.form['impressora']
-        data_resma = request.form['data_resma']
-        quantidade_resma = int(request.form['quantidade_resma'])
+        quantidade_resmas = int(request.form['quantidade_resmas'])
+        impressora = impressora_collection.find_one({"_id": ObjectId(impressora_id)})
 
-        # Atualizar o registro de controle de almoxarifado
+        # Atualizando as páginas restantes
+        paginas_restantes = impressora.get('paginas_restantes', 0) + (quantidade_resmas * 500)
+
+        # Atualizando o registro do almoxarifado
         controle_almoxarifado_collection.update_one(
             {"_id": ObjectId(registro_id)},
-            {"$set": {
-                'impressora_id': ObjectId(impressora_id),
-                'data_resma': data_resma,
-                'quantidade_resma': quantidade_resma
-            }}
+            {"$set": {'impressora_id': ObjectId(impressora_id), 'quantidade_resmas': quantidade_resmas}}
         )
-        
+
+        # Atualizando as páginas restantes na coleção de impressoras
+        impressora_collection.update_one(
+            {"_id": ObjectId(impressora_id)},
+            {"$set": {"paginas_restantes": paginas_restantes}}
+        )
+
         return redirect('/almoxarifado/listar')
 
-    impressoras = impressora_collection.find()
     return render_template('alterar_almoxarifado.html', registro=registro, impressoras=impressoras)
-
-@app.template_filter('nome_impressora')
-def nome_impressora_filter(impressora_id):
-    impressora = impressora_collection.find_one({"_id": ObjectId(impressora_id)})
-    return impressora['nome'] if impressora else 'Desconhecido'
-
-@app.template_filter('nome_cliente')
-def nome_cliente_filter(cliente_id):
-    cliente = cliente_collection.find_one({"_id": ObjectId(cliente_id)})
-    return cliente['nome_cliente'] if cliente else 'Desconhecido'
 
 if __name__ == '__main__':
     app.run(debug=True)

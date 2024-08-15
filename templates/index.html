@@ -18,6 +18,11 @@
             background-color: #f8f9fa;
             padding: 0.5rem 1rem;
         }
+        .dropdown-item.disabled {
+            pointer-events: none;
+            cursor: default;
+            color: #6c757d;
+        }
     </style>
 </head>
 <body>
@@ -35,12 +40,9 @@
                             Menu
                         </a>
                         <div class="dropdown-menu" aria-labelledby="menuDropdown">
-                            <a class="dropdown-item" href="/controle_impressao/listar"><i class="fas fa-print"></i> Controle de Impressão</a>
-                            <a class="dropdown-item" href="/controle-certificado"><i class="fas fa-certificate"></i> Controle de Certificado</a>
+                            <a class="dropdown-item" href="/impressao/listar"><i class="fas fa-print"></i> Controle de Impressão</a>
+                            <a class="dropdown-item disabled" href="#"><i class="fas fa-certificate"></i> Controle de Certificado</a>
                             <a class="dropdown-item" href="/almoxarifado/listar"><i class="fas fa-archive"></i> Controle Almoxarifado</a>
-                            <a class="dropdown-item" href="/controle-teste2"><i class="fas fa-tachometer-alt"></i> Controle Teste2</a>
-                            <a class="dropdown-item" href="/controle-teste3"><i class="fas fa-tachometer-alt"></i> Controle Teste3</a>
-                            <a class="dropdown-item" href="/controle-teste4"><i class="fas fa-tachometer-alt"></i> Controle Teste4</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -61,8 +63,13 @@
                             <a class="dropdown-item" href="/setor/listar"><i class="fas fa-edit"></i> Alterar</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Relatórios</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="relatoriosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Relatórios
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="relatoriosDropdown">
+                            <a class="dropdown-item" href="/folhas_impressas.html"><i class="fas fa-file-alt"></i> Folhas Impressas</a>
+                        </div>
                     </li>
                 </ul>
             </div>

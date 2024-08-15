@@ -16,7 +16,7 @@
                 <li class="list-group-item">
                     Impressora: {{ impressoras[registro.impressora_id] }} <br>
                     Data da Resma: {{ registro.data_resma }} <br>
-                    Quantidade de Resma: {{ registro.quantidade_resma }}
+                    Quantidade de Resma: {{ registro.quantidade_resmas }} <!-- Correção do campo -->
                     <a href="/almoxarifado/alterar/{{ registro._id }}" class="btn btn-primary btn-sm float-right">Alterar</a>
                 </li>
             {% endfor %}
